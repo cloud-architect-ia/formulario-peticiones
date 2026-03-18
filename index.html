@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peticiones de Oración - Ayuno de Alabanza</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Peticiones de Oración</h1>
+        <h2>Ayuno de Alabanza</h2>
+        
+        <div class="info-box">
+            <p>El <span class="highlight">21 de Marzo</span> tendremos nuestro <span class="highlight">Primer Ayuno</span> del grupo de Alabanza de este 2026</p>
+            <p class="italic">Si tienes alguna petición, puedes escribirla aquí para que estemos orando por ella durante el ayuno.</p>
+            <p class="small">Es tu elección si pones o no tu nombre 😊</p>
+        </div>
+
+        <div class="image-container">
+            <img src="https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=400" alt="Cofre de oración">
+        </div>
+
+        <form id="petitionForm">
+            <div class="form-group">
+                <input type="text" id="nombre" placeholder="Tu nombre (opcional)" class="form-input">
+            </div>
+
+            <div class="form-group">
+                <textarea id="peticion" placeholder="Escribe tu petición de oración aquí..." 
+                          class="form-textarea" maxlength="500" required></textarea>
+                <div class="char-count"><span id="charCount">0</span>/500</div>
+            </div>
+
+            <button type="submit" class="submit-btn">Enviar mi Petición</button>
+        </form>
+
+        <div id="mensaje" class="mensaje"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

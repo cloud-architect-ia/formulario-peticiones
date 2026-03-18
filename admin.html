@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrador de Peticiones</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        
+        .admin-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        
+        .actions {
+            margin-bottom: 30px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s;
+        }
+        
+        .btn-download {
+            background: #27ae60;
+            color: white;
+        }
+        
+        .btn-download:hover {
+            background: #229954;
+        }
+        
+        .btn-clear {
+            background: #e74c3c;
+            color: white;
+        }
+        
+        .btn-clear:hover {
+            background: #c0392b;
+        }
+        
+        .btn-refresh {
+            background: #3498db;
+            color: white;
+        }
+        
+        .btn-refresh:hover {
+            background: #2980b9;
+        }
+        
+        .stats {
+            background: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+            background: #34495e;
+            color: white;
+        }
+        
+        tr:hover {
+            background: #f5f5f5;
+        }
+        
+        .empty {
+            text-align: center;
+            padding: 40px;
+            color: #7f8c8d;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <h1>📋 Administrador de Peticiones de Oración</h1>
+        
+        <div class="stats">
+            <strong>Total de peticiones:</strong> <span id="totalPeticiones">0</span>
+        </div>
+        
+        <div class="actions">
+            <button class="btn-download" onclick="descargarExcel()">📥 Descargar Excel (CSV)</button>
+            <button class="btn-refresh" onclick="cargarPeticiones()">🔄 Actualizar</button>
+            <button class="btn-clear" onclick="limpiarPeticiones()">🗑️ Limpiar Todo</button>
+        </div>
+        
+        <div id="tablaPeticiones"></div>
+    </div>
+
+    <script>
+        function cargarPeticiones() {
+            const peticiones = JSON.parse(localStorage.getItem('peticiones')) || [];
+            const tabla = document.getElementById('tablaPeticiones');
+            const total = document.getElementById('totalPeticiones');
+            
+            total.textContent = peticiones.length;
+            
+            if (peticiones.length === 0) {
+                tabla.innerHTML = '<div class="empty">No hay peticiones registradas</div>';
+                return;
+            }
+            
+            let html = '<table><thead><tr><th>Fecha</th><th>Nombre</th><th>Petición</th></tr></thead><tbody>';
+            
+            peticiones.reverse().forEach(p => {
+                html += `<tr>
+                    <td>${p.fecha}</td>
+                    <td>${p.nombre}</td>
+                    <td>${p.peticion}</td>
+                </tr>`;
+            });
+            
+            html += '</tbody></table>';
+            tabla.innerHTML = html;
+        }
+        
+        function descargarExcel() {
+            const peticiones = JSON.parse(localStorage.getItem('peticiones')) || [];
+            
+            if (peticiones.length === 0) {
+                alert('No hay peticiones para descargar');
+                return;
+            }
+            
+            let csv = '\uFEFF';
+            csv += 'Fecha,Nombre,Petición\n';
+            
+            peticiones.forEach(p => {
+                const peticionLimpia = p.peticion.replace(/"/g, '""');
+                csv += `"${p.fecha}","${p.nombre}","${peticionLimpia}"\n`;
+            });
+            
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            
+            link.setAttribute('href', url);
+            link.setAttribute('download', `peticiones_oracion_${new Date().toISOString().split('T')[0]}.csv`);
+            link.style.visibility = 'hidden';
+            
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            alert('¡Archivo descargado exitosamente!');
+        }
+        
+        function limpiarPeticiones() {
+            if (confirm('¿Estás seguro de que quieres eliminar todas las peticiones? Esta acción no se puede deshacer.')) {
+                localStorage.removeItem('peticiones');
+                cargarPeticiones();
+                alert('Todas las peticiones han sido eliminadas');
+            }
+        }
+        
+        // Cargar peticiones al iniciar
+        cargarPeticiones();
+    </script>
+</body>
+</html>
