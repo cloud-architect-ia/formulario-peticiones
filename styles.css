@@ -135,6 +135,8 @@ h2 {
     width: 100%;
     filter: drop-shadow(0 15px 35px rgba(212, 175, 55, 0.5)) brightness(1.15);
     transition: transform 0.3s ease;
+    mix-blend-mode: multiply;
+    background: transparent;
 }
 
 .image-container img:hover {
