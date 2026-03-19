@@ -125,7 +125,11 @@ h2 {
 .image-container img {
     max-width: 320px;
     width: 100%;
-    filter: drop-shadow(0 15px 35px rgba(212, 175, 55, 0.4));
+    height: 280px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 15px;
+    filter: drop-shadow(0 15px 35px rgba(212, 175, 55, 0.4)) brightness(1.1) contrast(1.1);
     transition: transform 0.3s ease;
 }
 
