@@ -28,9 +28,9 @@ body::before {
     right: 0;
     bottom: 0;
     background: linear-gradient(180deg, 
-        rgba(44, 62, 80, 0.65) 0%, 
-        rgba(52, 73, 94, 0.70) 50%, 
-        rgba(44, 62, 80, 0.65) 100%);
+        rgba(44, 62, 80, 0.50) 0%, 
+        rgba(52, 73, 94, 0.55) 50%, 
+        rgba(44, 62, 80, 0.50) 100%);
     pointer-events: none;
     z-index: 0;
 }
@@ -274,15 +274,34 @@ h2 {
 @media (max-width: 600px) {
     body {
         padding: 15px;
-        background-size: contain;
-        background-position: top center;
+        background-size: auto 100%;
+        background-position: center;
+        background-repeat: repeat-x;
+        background-attachment: scroll;
     }
     
     body::before {
         background: linear-gradient(180deg, 
-            rgba(44, 62, 80, 0.60) 0%, 
-            rgba(52, 73, 94, 0.65) 50%, 
-            rgba(44, 62, 80, 0.60) 100%);
+            rgba(44, 62, 80, 0.45) 0%, 
+            rgba(52, 73, 94, 0.50) 50%, 
+            rgba(44, 62, 80, 0.45) 100%);
+    }
+    
+    body::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: 
+            linear-gradient(to right, 
+                rgba(44, 62, 80, 0.8) 0%, 
+                transparent 15%, 
+                transparent 85%, 
+                rgba(44, 62, 80, 0.8) 100%);
+        pointer-events: none;
+        z-index: 0;
     }
     
     .container {
