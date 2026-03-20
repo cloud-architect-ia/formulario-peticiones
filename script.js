@@ -1,7 +1,7 @@
 // =============================================
 // IMPORTANTE: Reemplaza esta URL con la de tu Google Apps Script desplegado
 // =============================================
-const GOOGLE_SCRIPT_URL = 'PEGA_AQUI_TU_URL_DE_GOOGLE_APPS_SCRIPT';
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzTH7tQb39iKPSviPIS_KV8CLWrNq0YD1YLvwnmXUWwg-Qt03pXAHOSy0Ff1jSxNzUe/exec';
 
 // Contador de caracteres
 const peticionTextarea = document.getElementById('peticion');
